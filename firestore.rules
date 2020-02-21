@@ -5,5 +5,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth.uid in get(/databases/$(database)/documents/elections/$(election)).data.admins;
     }
+    match /votingPlaceAssignments/{document=**} {
+      allow read: if true;
+      allow create: if request.auth.uid in get(/databases/$(database)/documents/elections/$(request.resource.data.electionsId)).data.admins;  
+      allow update, delete: if request.auth.uid in get(/databases/$(database)/documents/elections/$(resource.data.electionsId)).data.admins && request.auth.uid in get(/databases/$(database)/documents/elections/$(request.resource.data.electionsId)).data.admins
+    }
+    match /users/{user=**} {
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

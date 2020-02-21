@@ -25,19 +25,18 @@ var auth = firebase.auth();
 auth.signInWithEmailAndPassword("milos.s.pfc@gmail.com", "Test.1234!!").then((user) => {
     console.log('signed in!', user.additionalUserInfo.username)
 
-    // db.collection("elections").get().then(users => {
-    //     users.forEach((doc) => {
-    //         db.collection("elections").doc(doc.id).collection("stakeholders").get().then(stake => { stake.forEach(sta => { console.log('and the stakeholder: ', sta.data()) }); }).catch(err => console.error("messed up sub", err));
-    //         console.log(`${doc.id} =>`, doc.data());
-    //     });
-    // });
-
-    db.collection("elections").doc("jM95Y7aZAkG6b92kE75s").update({
-        name_2: "owned!"
-    }).then((doc) => {
-        console.log('we did it!', doc);
-    }).catch((ohno) => {
-        console.error("oh noes", ohno);
+    db.collection("users").get().then(users => {
+        users.forEach((doc) => {
+            console.log(`${doc.id} =>`, doc.data());
+        });
     });
+
+    // db.collection("elections").doc("jM95Y7aZAkG6b92kE75s").collection("stakeholders").add({
+    //     name_2: "owned!"
+    // }).then((doc) => {
+    //     console.log('we did it!', doc);
+    // }).catch((ohno) => {
+    //     console.error("oh noes", ohno);
+    // });
 
 }).catch(err => console.error("Failed to sign in", err));

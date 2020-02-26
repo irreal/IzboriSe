@@ -1,4 +1,5 @@
 <script>
+  import "./styles.scss";
   import { FirebaseApp, User, Doc, Collection } from "sveltefire";
 
   // Import the Firebase Services you want bundled and call initializeApp
@@ -28,32 +29,9 @@
   //   let signout = auth => auth.signOut();
 </script>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
-</style>
-
-<main>
-  <FirebaseApp {firebase}>
-    <Router {routes} />
-    <!-- <User let:user let:auth>
+<FirebaseApp {firebase}>
+  <Router {routes} />
+  <!-- <User let:user let:auth>
       <div slot="signed-out">
         <p>no user?</p>
         <button on:click={signin(auth)}>Sign in</button>
@@ -67,5 +45,4 @@
       </Collection>
       <button on:click={signout(auth)}>Sign out</button>
     </User> -->
-  </FirebaseApp>
-</main>
+</FirebaseApp>

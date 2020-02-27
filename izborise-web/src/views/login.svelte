@@ -31,12 +31,18 @@
   };
 </script>
 
+<style>
+  .margin-top {
+    margin-top: 5px;
+  }
+</style>
+
 <User let:auth let:user>
   You are signed in as: {user.email}
   <Navigate to="elections">link to elections</Navigate>
   <div class="field">
     <button
-      class="button"
+      class="button is-warning"
       class:is-loading={isLoading}
       on:click={auth.signOut()}>
       log out
@@ -83,15 +89,17 @@
           Remember me
         </label>
       </div> -->
-      <div class="field">
-        <button
-          class="button is-success"
-          class:is-loading={isLoading}
-          on:click={() => {
-            tryLogIn(auth);
-          }}>
-          Login
-        </button>
+      <div class="columns is-fullwidth margin-top">
+        <div class="column is-2">
+          <button
+            class="button is-success is-fullwidth"
+            class:is-loading={isLoading}
+            on:click={() => {
+              tryLogIn(auth);
+            }}>
+            Login
+          </button>
+        </div>
       </div>
     </form>
   </div>

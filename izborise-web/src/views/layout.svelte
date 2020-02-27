@@ -6,21 +6,11 @@
   export let params = {};
 </script>
 
-<!-- <style type="text/scss">
-  div {
-    p {
-      background-color: green;
-    }
-  }
-</style> -->
-
 <div class="app Site">
   <Header />
   <main class="Site-content">
     <section class="section">
       <div class="container">
-        <p>ovo je kao sadržaj</p>
-        <button class="button is-primary">dugmence</button>
         <Route {currentRoute} {params} />
       </div>
     </section>

@@ -1,21 +1,23 @@
 import Login from './views/login.svelte'
 import Layout from './views/layout.svelte'
 import Elections from './views/elections.svelte'
-import Resuls from './views/election/results.svelte';
+import Results from './views/election/results.svelte';
 import VotingPlaces from './views/election/votingPlaces.svelte';
+import Stakeholders from './views/election/stakeholders.svelte';
 
 const routes = [
     {
         name: '/',
-        redirectTo: 'elections',
+        redirectTo: 'election/jM95Y7aZAkG6b92kE75s',
         component: Layout
     },
     { name: 'login', component: Login, layout: Layout },
     {
-        name: 'elections', component: Elections, layout: Layout,
+        name: 'election/:electionId/', component: Elections, layout: Layout,
         nestedRoutes: [
             { name: 'results', component: Results },
-            { name: 'votingPlaces', component: VotingPlaces }
+            { name: 'votingplaces', component: VotingPlaces },
+            { name: 'stakeholders', component: Stakeholders }
         ]
     },
     // {

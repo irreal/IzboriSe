@@ -1,7 +1,7 @@
 <script>
   import { Collection } from "sveltefire";
 
-  export let electionId;
+  export let currentRoute;
 </script>
 
 <style>
@@ -15,7 +15,9 @@
   }
 </style>
 
-<Collection path={`elections/${electionId}/results`} let:data={results}>
+<Collection
+  path={`elections/${currentRoute.namedParams.electionId}/results`}
+  let:data={results}>
   {#each results as result}
     <div class="chart">
       {#each result.votes as stakeHolderVotes}

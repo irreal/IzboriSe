@@ -1,25 +1,22 @@
 <script>
   import { FirebaseApp, User, Doc, Collection } from "sveltefire";
   import { getContext } from "svelte";
-  import { Route } from "svelte-router-spa";
-
-  import Results from "./election/results.svelte";
-  import VotingPlaces from "./election/votingPlaces.svelte";
+  import { Route, Navigate } from "svelte-router-spa";
 
   export let currentRoute;
   export let params = {};
 
   let electionId;
   console.log(currentRoute);
-  electionId = "jM95Y7aZAkG6b92kE75s";
+  electionId = currentRoute.namedParams.electionId;
 
-  let tab = (title, icon, component) => {
-    return { title, icon, component };
+  let tab = (title, icon, routeName) => {
+    return { title, icon, routeName };
   };
   let tabs = [
-    tab("Rezultati", "", Results),
-    tab("Biračka mesta", "", VotingPlaces),
-    tab("Učesnici")
+    tab("Rezultati", "", "results"),
+    tab("Biračka mesta", "", "votingplaces"),
+    tab("Učesnici", "", "stakeholders")
   ];
   let activeTab = tabs[0];
 </script>
@@ -31,26 +28,18 @@
       <div class="tabs is-boxed is-medium">
         <ul>
           {#each tabs as tab}
-            <li class:is-active={activeTab == tab}>
-              <a
-                href
-                on:click={() => {
-                  activeTab = tab;
-                }}>
+            <li
+              class:is-active={currentRoute.childRoute && currentRoute.childRoute.name.endsWith(tab.routeName)}>
+              <!-- <a href={tab.routeName}>{tab.title}</a> -->
+              <Navigate to="/election/{electionId}/{tab.routeName}">
                 {tab.title}
-              </a>
+              </Navigate>
             </li>
           {/each}
         </ul>
 
       </div>
-      {#if activeTab && activeTab.component}
-        <!-- <svelte:component this={activeTab.component} {election} {electionId} /> -->
-        <Route {currentRoute} {params} />
-      {:else}
-        <p>No tab selected or no component</p>
-      {/if}
-
+      <Route {currentRoute} {params} />
     </div>
   </Doc>
 {:else}

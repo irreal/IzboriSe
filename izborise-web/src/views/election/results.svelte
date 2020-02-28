@@ -1,7 +1,6 @@
 <script>
   import { Collection } from "sveltefire";
 
-  export let election;
   export let electionId;
 </script>
 

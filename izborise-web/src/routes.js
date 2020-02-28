@@ -5,6 +5,7 @@ import Elections from './views/elections.svelte'
 const routes = [
     {
         name: '/',
+        redirectTo: 'elections',
         component: Layout
     },
     { name: 'login', component: Login, layout: Layout },

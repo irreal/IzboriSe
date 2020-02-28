@@ -2,39 +2,53 @@
   import { FirebaseApp, User, Doc, Collection } from "sveltefire";
   import { getContext } from "svelte";
 
-  export let params;
+  import Results from "./election/results.svelte";
+  import VotingPlaces from "./election/votingPlaces.svelte";
+
   export let currentRoute;
   let electionId;
   console.log(currentRoute);
-  electionId = currentRoute.queryParams.electionId;
+  electionId = "jM95Y7aZAkG6b92kE75s";
+
+  let tab = (title, icon, component) => {
+    return { title, icon, component };
+  };
+  let tabs = [
+    tab("Rezultati", "", Results),
+    tab("Biračka mesta", "", VotingPlaces),
+    tab("Učesnici")
+  ];
+  let activeTab = tabs[0];
 </script>
 
-<style>
-  .chart div {
-    font: 10px sans-serif;
-    background-color: steelblue;
-    text-align: right;
-    padding: 3px;
-    margin: 1px;
-    color: white;
-  }
-</style>
-
 {#if electionId}
+  <Doc path={`elections/${electionId}`} let:data={election}>
+    <h1 class="title">{election.name}</h1>
+    <div class="box">
+      <div class="tabs is-boxed is-medium">
+        <ul>
+          {#each tabs as tab}
+            <li class:is-active={activeTab == tab}>
+              <a
+                href
+                on:click={() => {
+                  activeTab = tab;
+                }}>
+                {tab.title}
+              </a>
+            </li>
+          {/each}
+        </ul>
 
-  <Collection path={`elections/${electionId}/results`} let:data={results}>
-    {#each results as result}
-      <p>{result.electionName}</p>
-      <div class="chart">
-        {#each result.votes as stakeHolderVotes}
-          <div
-            style="width:{stakeHolderVotes.numberOfVotes / (result.totalVotes / 100)}%">
-            {stakeHolderVotes.shortName} - {stakeHolderVotes.numberOfVotes}
-          </div>
-        {/each}
       </div>
-    {/each}
-  </Collection>
+      {#if activeTab && activeTab.component}
+        <svelte:component this={activeTab.component} {election} {electionId} />
+      {:else}
+        <p>No tab selected or no component</p>
+      {/if}
+
+    </div>
+  </Doc>
 {:else}
   <p>Invalid election!</p>
 {/if}
